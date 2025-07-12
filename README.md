@@ -33,7 +33,7 @@ Built with Node.js, Express, and EJS templating.
 ---
 
 ## Project Structure
-
+```bash
 ├── config/
 │ ├── db.js
 │ └── passport.js
@@ -67,7 +67,7 @@ Built with Node.js, Express, and EJS templating.
 ├── package.json
 └── package-lock.json
 
-
+```
 ---
 
 ## ⚙ Installation & Usage
@@ -92,28 +92,22 @@ npm run dev
 
 ```
 
-Tech Stack
-Node.js & Express
+## Tech Stack
 
-MongoDB / Mongoose
-
-Passport.js (authentication)
-
-EJS (templating)
-
-CSS / JavaScript (frontend)
+- Node.js & Express
+- MongoDB / Mongoose
+- Passport.js (authentication)
+- EJS (templating)
+- CSS / JavaScript (frontend)
 
 
-✨ Future Enhancements
-Real-time notifications
+## Future Enhancements
 
-Chat between users
+- Real-time notifications
+- Chat between users
+- Better swap matching algorithm
+- REST API / GraphQL support
+- PWA support
 
-Better swap matching algorithm
-
-REST API / GraphQL support
-
-PWA support
-
-📄 License
+## 📄 License
 This project is licensed under the MIT License.
