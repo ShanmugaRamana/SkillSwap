@@ -26,35 +26,55 @@
     <img src="<%= user.photo || '/default-user.png' %>" alt="Profile" width="40" height="40"
          style="border-radius: 50%; cursor: pointer;" onclick="toggleMenu()" />
   </div>
-  
-   <div>
-  <% if (!tutorRequest) { %>
-    <button onclick="location.href='/tutor/apply'">Start Tutoring</button>
-  <% } else if (Tutor.status === 'pending') { %>
-    <button disabled>Requested</button>
-  <% } else if (Tutor.status === 'rejected') { %>
-    <button onclick="location.href='/tutor/reapply'">Rejected - Reapply</button>
-  <% } else if (Tutor.status === 'approved') { %>
-    <button disabled>Approved</button>
-    <button onclick="location.href='/tutor/dashboard'">Tutor Dashboard</button>
-  <% } %>
-</div>
-  
+
   <!-- Profile dropdown -->
   <div id="profileMenu">
     <p><strong>Email:</strong> <%= user.email %></p>
     <a href="/edit-name">Edit Name</a>
     <% if (!user.googleId) { %>
       <a href="/change-photo">Change Profile Icon</a>
+      <a href="/edit-password">Edit Password</a>
     <% } %>
-    <% if (user.password) { %>
-  <a href="/edit-password">Edit Password</a>
-<% } %>
     <a href="/logout">Logout</a>
-    
   </div>
 
-  <!-- Terms -->
+  <% if (!tutorRequest) { %>
+    <button onclick="location.href='/tutor/apply'">Start Tutoring</button>
+  <% } else if (tutorRequest.status === 'pending') { %>
+    <button disabled>Requested</button>
+  <% } else if (tutorRequest.status === 'approved') { %>
+    <button disabled>Approved</button>
+    <button onclick="location.href='/tutor/dashboard'">Tutor Dashboard</button>
+  <% } else if (tutorRequest.status === 'rejected') { %>
+    <button onclick="location.href='/tutor/apply'">Rejected - Reapply</button>
+    <p>Reason: <%= tutorRequest.rejectionReason %></p>
+  <% } %>
+
+  <!-- Search + Sort -->
+  <form method="GET" action="/dashboard">
+    <input type="text" name="search" placeholder="Search tutor by name or skill" />
+    <select name="sort">
+      <option value="">Sort by Availability</option>
+      <option value="asc">Available (A-Z)</option>
+      <option value="desc">Available (Z-A)</option>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
+  <!-- List of Tutors -->
+  <h3>Available Tutors:</h3>
+  <% tutors.forEach(tutor => { %>
+    <% if (!tutor.user.equals(user._id)) { %>
+      <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+        <p><strong>Name:</strong> <%= tutor.name %></p>
+        <p><strong>Location:</strong> <%= tutor.location %></p>
+        <p><strong>Skills:</strong> <%= tutor.skillsOffered %></p>
+        <p><strong>Availability:</strong> <%= tutor.availability %></p>
+        <a href="/uploads/<%= tutor.certificationFile %>" target="_blank">View Certificate</a>
+      </div>
+    <% } %>
+  <% }) %>
+
   <footer style="margin-top: 50px;">
     <hr>
     <p><a href="/terms">Terms of Use</a></p>

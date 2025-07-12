@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head><title>Signup</title></head>
+<head><title>Sign Up</title></head>
 <body>
-  <h2>Signup</h2>
-  <form action="/auth/signup" method="POST">
-    <input name="name" placeholder="Name" required><br>
-    <input name="email" placeholder="Email" required><br>
-    <input name="password" type="password" placeholder="Password" required><br>
-    <button type="submit">Signup</button>
+  <h2>Sign Up</h2>
+  <% if (error) { %><p style="color:red;"><%= error %></p><% } %>
+  <form method="POST" action="/auth/signup">
+    <input name="name" placeholder="Name" required /><br>
+    <input name="email" placeholder="Email" required /><br>
+    <input name="password" type="password" placeholder="Password" required /><br>
+    <button type="submit">Sign Up</button>
   </form>
-
-  <br>
-  <p>Or signup with:</p>
-  <a href="/auth/google">
-    <button>Continue with Google</button>
-  </a>
-
-  <% if (error) { %>
-    <p style="color: red"><%= error %></p>
-  <% } %>
-
-  <br><a href="/">← Back to Home</a>
+  <a href="/auth/google">Sign up with Google</a><br>
+  <a href="/login">Already have an account?</a>
 </body>
 </html>

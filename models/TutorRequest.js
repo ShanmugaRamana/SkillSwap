@@ -1,27 +1,18 @@
 const mongoose = require("mongoose");
 
-const TutorRequestSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  },
+const tutorRequestSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   name: String,
   location: String,
-  skillsOffered: [String],
+  skillsOffered: String,
   availability: String,
-  certificationFile: {
-    type: String, // ✅ THIS is correct
-    required: true
-  },
+  certificationFile: String, // PDF file path
   status: {
-  type: String,
-  enum: ["pending", "approved", "rejected"],
-  default: "pending"
-},
-  rejectionReason: {
     type: String,
-    default: ""
-  }
+    enum: ["pending", "approved", "rejected"],
+    default: "pending"
+  },
+  rejectionReason: String,
 });
 
-module.exports = mongoose.model("TutorRequest", TutorRequestSchema);
+module.exports = mongoose.model("TutorRequest", tutorRequestSchema);

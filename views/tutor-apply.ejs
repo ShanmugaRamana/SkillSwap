@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>Apply to Tutor</title></head>
+<body>
+  <h2>Start Tutoring - Application Form</h2>
+  <form method="POST" action="/tutor/apply" enctype="multipart/form-data">
+    <label>Name:</label><br>
+    <input name="name" required /><br><br>
+
+    <label>Location:</label><br>
+    <input name="location" required /><br><br>
+
+    <label>Skills Offered:</label><br>
+    <input name="skillsOffered" required /><br><br>
+
+    <label>Availability:</label><br>
+    <input name="availability" required /><br><br>
+
+    <label>Certification (PDF only):</label><br>
+    <input type="file" name="certificationFile" accept=".pdf" required /><br><br>
+
+    <button type="submit">Submit Application</button>
+  </form>
+  <br><a href="/dashboard">← Back to Dashboard</a>
+</body>
+</html>

@@ -1,26 +1,42 @@
-<h2>Pending Tutor Requests</h2>
+<!DOCTYPE html>
+<html>
+<head><title>Tutor Requests</title></head>
+<body>
+  <h2>Tutor Applications</h2>
 
-<% if (requests.length === 0) { %>
-  <p>No tutor requests found.</p>
-<% } %>
+  <% if (requests.length === 0) { %>
+    <p>No requests yet.</p>
+  <% } %>
 
-<% requests.forEach(req => { %>
-  <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
-    <p><strong>Name:</strong> <%= req.name %></p>
-    <p><strong>Email:</strong> <%= req.user.email %></p>
-    <p><strong>Location:</strong> <%= req.location %></p>
-    <p><strong>Skills Offered:</strong> <%= req.skillsOffered.join(', ') %></p>
-    <p><strong>Status:</strong> <%= req.status %></p>
-    <p><strong>Certification File:</strong> 
-<a href="/uploads/<%= req.certificationFile %>" target="_blank">View PDF</a>
-</p>
-    <form action="/admin/approve-tutor/<%= req._id %>" method="POST">
-      <button type="submit">Approve</button>
-    </form>
+  <% requests.forEach(req => { %>
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+      <p><strong>Name:</strong> <%= req.name %></p>
+      <p><strong>Email:</strong> <%= req.user.email %></p>
+      <p><strong>Location:</strong> <%= req.location %></p>
+      <p><strong>Skills:</strong> <%= req.skillsOffered %></p>
+      <p><strong>Availability:</strong> <%= req.availability %></p>
+      <p>
+        <strong>Certificate:</strong>
+        <a href="<%= req.certificationFile %>" target="_blank">View PDF</a>
+      </p>
 
-    <form action="/admin/reject-tutor/<%= req._id %>" method="POST">
-      <input type="text" name="reason" placeholder="Reason for rejection" required />
-      <button type="submit">Reject</button>
-    </form>
-  </div>
-<% }) %>
+      <% if (req.status === "pending") { %>
+        <form action="/admin/approve-tutor/<%= req._id %>" method="POST" style="display:inline;">
+          <button type="submit">Approve</button>
+        </form>
+        <form action="/admin/reject-tutor/<%= req._id %>" method="POST" style="display:inline;">
+          <input type="text" name="reason" placeholder="Rejection Reason" required />
+          <button type="submit">Reject</button>
+        </form>
+      <% } else { %>
+        <p><strong>Status:</strong> <%= req.status %></p>
+        <% if (req.rejectionReason) { %>
+          <p><strong>Reason:</strong> <%= req.rejectionReason %></p>
+        <% } %>
+      <% } %>
+    </div>
+  <% }) %>
+
+  <br><a href="/admin-login">← Back to Admin</a>
+</body>
+</html>

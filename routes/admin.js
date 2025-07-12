@@ -1,59 +1,46 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAdmin } = require("../middleware/auth");
 const TutorRequest = require("../models/TutorRequest");
 const Tutor = require("../models/Tutor");
+const User = require("../models/User");
 
-// GET: List all tutor requests
+// Middleware for admin protection
+
+
+// View tutor requests
 router.get("/tutor-requests", async (req, res) => {
-  try {
-    const requests = await TutorRequest.find({}).populate("user");
-    res.render("admin-tutor-requests", { requests });
-  } catch (err) {
-    console.error("Error fetching tutor requests:", err);
-    res.status(500).send("Server error");
-  }
+  const requests = await TutorRequest.find({}).populate("user");
+  res.render("admin-tutor-requests", { requests });
 });
 
-// POST: Approve a tutor
+// Approve tutor request
 router.post("/approve-tutor/:id", async (req, res) => {
-  try {
-    const request = await TutorRequest.findById(req.params.id);
-    if (!request) return res.status(404).send("Request not found");
+  const request = await TutorRequest.findById(req.params.id);
+  if (!request) return res.send("Not found");
 
-    await Tutor.create({
-      user: request.user,
-      name: request.name,
-      location: request.location,
-      skillsOffered: request.skillsOffered,
-      availability: request.availability,
-      certificationFile: request.certificationFile,
-    });
+  await Tutor.create({
+    user: request.user,
+    name: request.name,
+    location: request.location,
+    skillsOffered: request.skillsOffered,
+    availability: request.availability,
+    certificationFile: request.certificationFile,
+  });
 
-    await TutorRequest.findByIdAndDelete(req.params.id); // Optional: delete request after approval
-    res.redirect("/admin/tutor-requests");
-  } catch (err) {
-    console.error("Error approving tutor:", err);
-    res.status(500).send("Server error");
-  }
-        request.status = "approved";
-    res.redirect("/admin/tutor-requests");
-
+  request.status = "approved";
+  await request.save();
+  res.redirect("/admin/tutor-requests");
 });
 
-// POST: Reject a tutor with reason
+// Reject tutor request
 router.post("/reject-tutor/:id", async (req, res) => {
-  try {
-    const { reason } = req.body;
-    await TutorRequest.findByIdAndUpdate(req.params.id, {
-      status: "rejected",
-      rejectionReason: reason,
-    });
-    res.redirect("/admin/tutor-requests");
-  } catch (err) {
-    console.error("Error rejecting tutor:", err);
-    res.status(500).send("Server error");
-  }
+  const { reason } = req.body;
+  await TutorRequest.findByIdAndUpdate(req.params.id, {
+    status: "rejected",
+    rejectionReason: reason,
+  });
+
+  res.redirect("/admin/tutor-requests");
 });
 
 module.exports = router;

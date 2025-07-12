@@ -1,5 +1,12 @@
-<h2>Edit Name</h2>
-<form action="/edit-name" method="POST">
-  <input type="text" name="name" value="<%= user.name %>" required>
-  <button type="submit">Update</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head><title>Edit Name</title></head>
+<body>
+  <h2>Edit Your Name</h2>
+  <form method="POST" action="/edit-name">
+    <input name="name" value="<%= user.name %>" required />
+    <button type="submit">Save</button>
+  </form>
+  <br><a href="/dashboard">← Back to Dashboard</a>
+</body>
+</html>

@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head><title>Admin Dashboard</title></head>
+<head><title>Admin Panel</title></head>
 <body>
-  <h2>Admin Panel</h2>
-  <a href="/admin/tutor-requests">
-  <button>📄 View Tutor Requests</button>
-  </a>
-  <p>All users</p>
+  <h2>Admin Dashboard</h2>
+  <p>List of Registered Users:</p>
   <ul>
-    <% users.forEach(u => { %>
+    <% users.forEach(user => { %>
       <li>
-        <strong>Name:</strong> <%= u.name %> |
-        <strong>Email:</strong> <%= u.email %> |
-        <strong>Password:</strong> <%= u.password %> |
-        <strong>Google ID:</strong> <%= u.googleId || "N/A" %>
+        Name: <%= user.name %> |
+        Email: <%= user.email %> |
+        Google ID: <%= user.googleId || "N/A" %>
       </li>
-    <% }); %>
+    <% }) %>
   </ul>
-  <br><a href="/">← Back to Home</a>
+  <br>
+  <a href="/admin/tutor-requests"><button>View Tutor Requests</button></a>
+  <br><br>
+  <a href="/">← Back to Home</a>
 </body>
 </html>
