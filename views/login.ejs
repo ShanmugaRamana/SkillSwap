@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Login</title></head>
+<body>
+  <h2>Login</h2>
+  <form action="/auth/login" method="POST">
+    <input name="email" placeholder="Email" required><br>
+    <input name="password" type="password" placeholder="Password" required><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <br>
+  <p>Or login with:</p>
+  <a href="/auth/google">
+    <button>Continue with Google</button>
+  </a>
+
+  <% if (error) { %>
+    <p style="color: red"><%= error %></p>
+  <% } %>
+
+  <br><a href="/">← Back to Home</a>
+</body>
+</html>

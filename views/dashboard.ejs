@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    #profileMenu {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      background: #f2f2f2;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    #profileMenu a {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome, <%= user.name %>!</h2>
+
+  <!-- Profile icon -->
+  <div style="position: absolute; top: 10px; right: 10px;">
+    <img src="<%= user.photo || '/default-user.png' %>" alt="Profile" width="40" height="40"
+         style="border-radius: 50%; cursor: pointer;" onclick="toggleMenu()" />
+  </div>
+  
+   <div>
+  <% if (!tutorRequest) { %>
+    <button onclick="location.href='/tutor/apply'">Start Tutoring</button>
+  <% } else if (Tutor.status === 'pending') { %>
+    <button disabled>Requested</button>
+  <% } else if (Tutor.status === 'rejected') { %>
+    <button onclick="location.href='/tutor/reapply'">Rejected - Reapply</button>
+  <% } else if (Tutor.status === 'approved') { %>
+    <button disabled>Approved</button>
+    <button onclick="location.href='/tutor/dashboard'">Tutor Dashboard</button>
+  <% } %>
+</div>
+  
+  <!-- Profile dropdown -->
+  <div id="profileMenu">
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <a href="/edit-name">Edit Name</a>
+    <% if (!user.googleId) { %>
+      <a href="/change-photo">Change Profile Icon</a>
+    <% } %>
+    <% if (user.password) { %>
+  <a href="/edit-password">Edit Password</a>
+<% } %>
+    <a href="/logout">Logout</a>
+    
+  </div>
+
+  <!-- Terms -->
+  <footer style="margin-top: 50px;">
+    <hr>
+    <p><a href="/terms">Terms of Use</a></p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("profileMenu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
