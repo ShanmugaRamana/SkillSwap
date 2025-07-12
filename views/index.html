@@ -1,12 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>SkillSwap</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap - Connect & Learn</title>
+  <link rel="stylesheet" href="../styles/index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <h1>Welcome to SkillSwap</h1>
-  <a href="/signup">Sign Up</a> |
-  <a href="/login">Login</a> |
-  <a href="/admin-login">Admin Login</a>
+  <header class="navbar">
+    <div class="brand">
+      <img src="../assets/logo.png" alt="SkillSwap Logo" class="logo" />
+      <span class="brand-name">SkillSwap</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#how">How it Works</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button class="get-started">Get Started</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="content" id="hero">
+    <div class="hero-text">
+      <h1>Unlock Skills. Share Knowledge. Build Together.</h1>
+      <p>Join a global community where skill-sharing powers innovation. Learn, teach, and grow with your peers—one swap at a time.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn primary-btn">Get Started</a>
+        <a href="#" class="btn secondary-btn">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="how-it-works">
+    <h2>How It Works</h2>
+    <p>SkillSwap connects people who want to learn and teach different skills. 
+      You can explore public profiles and find someone who offers what you're looking for. 
+      Once logged in, you can send a swap request by offering one of your own skills in return. 
+      After that, both users can accept, reject, or manage their requests and start learning together.</p>
+  </section>
+
+<section id="team" class="team">
+  <h2>Meet the Team</h2>
+  <div class="team-grid">
+    <div class="member">
+      <img src="../assets/team/member1.jpg" alt="Shanmuga Ramana " />
+      <h4>Shanmuga Ramana N</h4>
+      <p>Team Leader</p>
+    </div>
+    <div class="member">
+      <img src="../assets/team/member2.jpg" alt="Mukesh Raj " />
+      <h4>Mukesh Raj K</h4>
+      <p>Frontend Developer</p>
+    </div>
+    <div class="member">
+      <img src="../assets/team/member3.jpg" alt="Vivyn" />
+      <h4>Vivyn R R</h4>
+      <p>Developer</p>
+    </div>
+    <div class="member">
+      <img src="../assets/team/member4.jpg" alt="Sanjay Kumar" />
+      <h4>Sanjay Kumar S</h4>
+      <p>UI/UX Designer</p>
+    </div>
+  </div>
+</section>
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>Have questions or want to collaborate? Reach out to us:</p>
+      <a href="mailto:2006mukeshraj@gmail.com" class="email-link">📧 2006mukeshraj@gmail.com</a>
+    </div>
+  </section>
 </body>
 </html>

@@ -1,90 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard</title>
-  <style>
-    #profileMenu {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 10px;
-      background: #f2f2f2;
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
-    #profileMenu a {
-      display: block;
-      margin-bottom: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Swap Platform - Home</title>
+    
 </head>
 <body>
-  <h2>Welcome, <%= user.name %>!</h2>
+    <div class="container">
+        <div class="header">
+            <h1>Skill Swap Platform</h1>
+            <div class="header-right">
+                <button class="search-btn">🔍</button>
+                <button class="menu-btn">☰</button>
+            </div>
+        </div>
 
-  <!-- Profile icon -->
-  <div style="position: absolute; top: 10px; right: 10px;">
-    <img src="<%= user.photo || '/default-user.png' %>" alt="Profile" width="40" height="40"
-         style="border-radius: 50%; cursor: pointer;" onclick="toggleMenu()" />
-  </div>
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search skills or people..." id="searchInput">
+                <select class="filter-dropdown" id="skillFilter">
+                    <option value="all">All Skills</option>
+                    <option value="development">Development</option>
+                    <option value="design">Design</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="photography">Photography</option>
+                    <option value="business">Business</option>
+                </select>
+                <button class="search-btn-main" onclick="searchProfiles()">Search</button>
+            </div>
+        </div>
 
-  <!-- Profile dropdown -->
-  <div id="profileMenu">
-    <p><strong>Email:</strong> <%= user.email %></p>
-    <a href="/edit-name">Edit Name</a>
-    <% if (!user.googleId) { %>
-      <a href="/change-photo">Change Profile Icon</a>
-      <a href="/edit-password">Edit Password</a>
-    <% } %>
-    <a href="/logout">Logout</a>
-  </div>
+        <div class="content" id="profilesList">
+            <!-- Profile Card 1 -->
+            <div class="profile-card" onclick="viewProfile('sarah-wilson')">
+                <div class="profile-header">
+                    <div class="profile-pic-container">
+                        <div class="profile-pic">SW</div>
+                        <div class="online-indicator"></div>
+                    </div>
+                    <div class="profile-info">
+                        <h3>Sarah Wilson</h3>
+                        <div class="location">📍 Los Angeles, CA</div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-number">4.2</span>
+                    </div>
+                </div>
 
-  <% if (!tutorRequest) { %>
-    <button onclick="location.href='/tutor/apply'">Start Tutoring</button>
-  <% } else if (tutorRequest.status === 'pending') { %>
-    <button disabled>Requested</button>
-  <% } else if (tutorRequest.status === 'approved') { %>
-    <button disabled>Approved</button>
-    <button onclick="location.href='/tutor/dashboard'">Tutor Dashboard</button>
-  <% } else if (tutorRequest.status === 'rejected') { %>
-    <button onclick="location.href='/tutor/apply'">Rejected - Reapply</button>
-    <p>Reason: <%= tutorRequest.rejectionReason %></p>
-  <% } %>
+                <div class="skills-section">
+                    <div class="skills-title">Skills Offered</div>
+                    <span class="skill-tag">Graphic Design</span>
+                    <span class="skill-tag">UI/UX Design</span>
+                    <span class="skill-tag">Figma</span>
+                </div>
 
-  <!-- Search + Sort -->
-  <form method="GET" action="/dashboard">
-    <input type="text" name="search" placeholder="Search tutor by name or skill" />
-    <select name="sort">
-      <option value="">Sort by Availability</option>
-      <option value="asc">Available (A-Z)</option>
-      <option value="desc">Available (Z-A)</option>
-    </select>
-    <button type="submit">Filter</button>
-  </form>
+                <div class="skills-section">
+                    <div class="skills-title">Skills Wanted</div>
+                    <span class="skill-tag wanted">Web Development</span>
+                    <span class="skill-tag wanted">SEO</span>
+                </div>
 
-  <!-- List of Tutors -->
-  <h3>Available Tutors:</h3>
-  <% tutors.forEach(tutor => { %>
-    <% if (!tutor.user.equals(user._id)) { %>
-      <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
-        <p><strong>Name:</strong> <%= tutor.name %></p>
-        <p><strong>Location:</strong> <%= tutor.location %></p>
-        <p><strong>Skills:</strong> <%= tutor.skillsOffered %></p>
-        <p><strong>Availability:</strong> <%= tutor.availability %></p>
-        <a href="/uploads/<%= tutor.certificationFile %>" target="_blank">View Certificate</a>
-      </div>
-    <% } %>
-  <% }) %>
+                <div class="availability">
+                    <div class="availability-icon"></div>
+                    <span class="availability-text">Available: Mon-Fri 7PM-10PM</span>
+                </div>
 
-  <footer style="margin-top: 50px;">
-    <hr>
-    <p><a href="/terms">Terms of Use</a></p>
-  </footer>
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="requestSwap('sarah-wilson', event)">Request Swap</button>
+                    <button class="btn btn-secondary" onclick="viewProfile('sarah-wilson', event)">View Profile</button>
+                </div>
+            </div>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("profileMenu");
-      menu.style.display = (menu.style.display === "block") ? "none" : "block";
-    }
-  </script>
+            <!-- Profile Card 2 -->
+            <div class="profile-card" onclick="viewProfile('mike-chen')">
+                <div class="profile-header">
+                    <div class="profile-pic-container">
+                        <div class="profile-pic">MC</div>
+                        <div class="online-indicator"></div>
+                    </div>
+                    <div class="profile-info">
+                        <h3>Mike Chen</h3>
+                        <div class="location">📍 Seattle, WA</div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-number">4.9</span>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title">Skills Offered</div>
+                    <span class="skill-tag">Photography</span>
+                    <span class="skill-tag">Video Editing</span>
+                    <span class="skill-tag">Lightroom</span>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title">Skills Wanted</div>
+                    <span class="skill-tag wanted">Social Media Marketing</span>
+                    <span class="skill-tag wanted">Content Strategy</span>
+                </div>
+
+                <div class="availability">
+                    <div class="availability-icon"></div>
+                    <span class="availability-text">Available: Weekends</span>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="requestSwap('mike-chen', event)">Request Swap</button>
+                    <button class="btn btn-secondary" onclick="viewProfile('mike-chen', event)">View Profile</button>
+                </div>
+            </div>
+
+            <!-- Profile Card 3 -->
+            <div class="profile-card" onclick="viewProfile('emily-johnson')">
+                <div class="profile-header">
+                    <div class="profile-pic-container">
+                        <div class="profile-pic">EJ</div>
+                    </div>
+                    <div class="profile-info">
+                        <h3>Emily Johnson</h3>
+                        <div class="location">📍 New York, NY</div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-number">4.6</span>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title">Skills Offered</div>
+                    <span class="skill-tag">Digital Marketing</span>
+                    <span class="skill-tag">Google Ads</span>
+                    <span class="skill-tag">Analytics</span>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title">Skills Wanted</div>
+                    <span class="skill-tag wanted">Python</span>
+                    <span class="skill-tag wanted">Data Analysis</span>
+                </div>
+
+                <div class="availability">
+                    <div class="availability-icon"></div>
+                    <span class="availability-text">Available: Evenings</span>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="requestSwap('emily-johnson', event)">Request Swap</button>
+                    <button class="btn btn-secondary" onclick="viewProfile('emily-johnson', event)">View Profile</button>
+                </div>
+            </div>
+
+            <!-- Profile Card 4 -->
+            <div class="profile-card" onclick="viewProfile('david-kim')">
+                <div class="profile-header">
+                    <div class="profile-pic-container">
+                        <div class="profile-pic">DK</div>
+                        <div class="online-indicator"></div>
+                    </div>
+                    <div class="profile-info">
+                        <h3>David Kim</h3>
+                        <div class="location">📍 San Francisco, CA</div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-number">4.8</span>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title">Skills Offered</div>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">MongoDB</span>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title">Skills Wanted</div>
+                    <span class="skill-tag wanted">Mobile Development</span>
+                    <span class="skill-tag wanted">Flutter</span>
+                </div>
+
+                <div class="availability">
+                    <div class="availability-icon"></div>
+                    <span class="availability-text">Available: Flexible hours</span>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="requestSwap('david-kim', event)">Request Swap</button>
+                    <button class="btn btn-secondary" onclick="viewProfile('david-kim', event)">View Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-add-btn" onclick="createProfile()" title="Create your profile">+</button>
+
+    
 </body>
 </html>
