@@ -8,8 +8,8 @@ Built with Node.js, Express, and EJS templating.
 ## Features
 
 ✅ *User Profiles*
-- Name, location (optional)
-- Profile photo (optional)
+- Name, location 
+- Profile photo
 - List of skills offered & wanted
 - Availability (e.g., weekends, evenings)
 - Public/private profile option
